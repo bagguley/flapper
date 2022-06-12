@@ -1,7 +1,5 @@
-import 'dart:convert';
-
+import 'package:flapper/BingImage.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 
 void main() {
   runApp(const MyApp());
@@ -62,20 +60,9 @@ class _MyHomePageState extends State<MyHomePage> {
         itemCount: 4,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return const Placeholder();
-          //return createImage(index);
+          return BingImage(index);
         },
       ),
     );
-  }
-  
-  Future<Widget> createImage(int index) async {
-    Uri uri = Uri.https('https://www.bing.com', '/HPImageArchive.aspx', {'format' : 'js', 'idx' : index, 'n' : '1'});
-    var response = await get(uri);
-    if (response.statusCode == 200) {
-      var url = jsonDecode(response.body)['images']['url'];
-      return Image.network("https://www.bing.com$url");
-    }
-    return Image.asset("error");
   }
 }
