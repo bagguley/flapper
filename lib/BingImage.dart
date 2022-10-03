@@ -15,7 +15,6 @@ class BingImage extends StatefulWidget {
 class _BingImageState extends State<BingImage> {
   late final Future<Image> image;
 
-
   @override
   void initState() {
     super.initState();
@@ -23,13 +22,19 @@ class _BingImageState extends State<BingImage> {
   }
 
   Future<Image> _createFuture() async {
-    Uri uri = Uri.https('https://www.bing.com', '/HPImageArchive.aspx', {'format' : 'js', 'idx' : widget.index, 'n' : '1'});
+    try {
+      Uri uri = Uri.https('www.bing.com', '/HPImageArchive.aspx', {'format': 'js', 'idx': widget.index.toString(), 'n': '1'});
+    print(uri);
     var response = await get(uri);
     if (response.statusCode == 200) {
-      var url = jsonDecode(response.body)['images']['url'];
+      debugPrint(response.body);
+      var url = jsonDecode(response.body)['images'][0]['url'];
       return Image.network("https://www.bing.com$url");
     }
     return Image.asset("error");
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override

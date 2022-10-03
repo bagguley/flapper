@@ -60,7 +60,11 @@ class _MyHomePageState extends State<MyHomePage> {
         itemCount: 4,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return BingImage(index);
+          return SizedBox(
+            height: 108,
+            width: 192,
+            child: BingImage(index)
+          );
         },
       ),
     );
